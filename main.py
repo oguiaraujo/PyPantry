@@ -15,11 +15,11 @@ while menu != "0":
   print("+----------------------+")
   print("| Sinais de notificação existentes com base nos relatórios")
   menu = input("| Escolha sua opção:")
-  
+
   if menu == "1":
     os.system("Clear")
-    gerenciar = ""
-    while gerenciar != "0":
+    opList = ""
+    while opList != "0":
       os.system('clear')
       print("+----------------------+")
       print("|   GERENCIAR ITENS    |")
@@ -30,12 +30,12 @@ while menu != "0":
       print("| 4 - Visualizar       |")
       print("| 0 - Voltar           |")
       print("+----------------------+")
-      gerenciar = input("| Escolha sua opção:")
+      opList = input("| Escolha sua opção:")
 
   if menu == "2":
     os.system("Clear")
-    gerenciar = ""
-    while gerenciar != "0":
+    opList = ""
+    while opList != "0":
       os.system('clear')
       print("+----------------------------+")
       print("|    RELATÓRIOS DE ITENS     |")
@@ -47,24 +47,24 @@ while menu != "0":
       print("| 5 - Vencidos               |")
       print("| 0 - Voltar                 |")
       print("+----------------------------+")
-      gerenciar = input("| Escolha sua opção:")
+      opList = input("| Escolha sua opção:")
 
   if menu == "3":
-      os.system('clear')
-      print("+----------------------------+")
-      print("|      LISTA DE COMPRAS      |")
-      print("+----------------------------+")
-      falta = ""
-      for nome in falta: # Variável que recebe os itens que acabaram
-        print("| ", nome)
-      menu = input("| <ENTER> para voltar")
+    os.system('clear')
+    opList = ""
+    print("+----------------------------+")
+    print("|      LISTA DE COMPRAS      |")
+    print("+----------------------------+")
+    # Variável que recebe os itens que atingiram o estoque minimo
+    opList = input("| <ENTER> para voltar")
 
   if menu == "4":
-      os.system('clear')
-      print("+-------------------------------------------+")
-      print("|                INFORMAÇÕES                |")
-      print("+-------------------------------------------+")
-      print("| Projeto de Controle de Despensa Doméstica |")
-      print("| Desenvolvedor: Guilherme Araújo / @0Haki  |")
-      print("+-------------------------------------------+")
-      menu = input("| <ENTER> para voltar")
+    os.system('clear')
+    opList = ""
+    print("+-------------------------------------------+")
+    print("|                INFORMAÇÕES                |")
+    print("+-------------------------------------------+")
+    print("| Projeto de Controle de Despensa Doméstica |")
+    print("| Desenvolvedor: Guilherme Araújo / @0Haki  |")
+    print("+-------------------------------------------+")
+    opList = input("| <ENTER> para voltar")
