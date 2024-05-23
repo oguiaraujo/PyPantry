@@ -1,5 +1,7 @@
 import os
 
+#-PyPantry----------------------------------------------------------------------
+
 menu = ""
 while menu != "0":
   os.system("clear")
@@ -13,11 +15,11 @@ while menu != "0":
   print("| 4 - Informações      |")
   print("| 0 - Sair             |")
   print("+----------------------+")
-  print("| Sinais de notificação existentes com base nos relatórios")
+  # print("| Sinais de notificação existentes com base nos relatórios")
   menu = input("| Escolha sua opção:")
 
   if menu == "1":
-    os.system("Clear")
+    os.system("clear")
     opList = ""
     while opList != "0":
       os.system('clear')
@@ -32,7 +34,27 @@ while menu != "0":
       print("+----------------------+")
       opList = input("| Escolha sua opção:")
 
-  if menu == "2":
+      if opList == "1":
+        os.system("clear")
+        # Laço para ficar adicionando itens até inserir "Sair"
+        print("+----------------------+")
+        print("|    ADICIONAR ITEM    |")
+        print("+----------------------+")
+        nome = input("| Nome do item:")
+        categoria = input("| Categoria do item:")
+        quantidade = input("| Quantidade a ser adicionada:")
+        validade = input("| Validade do item:") # Apenas se o item tiver validade
+        data_compra = input("| Data de compra do item:") #Essa variável deve ter
+        #relação direta com a validade, pois pode haver o mesmo item comprado em
+        #datas diferentes (consequentemente com validades diferentes)
+        localizacao = input("| Localização do item:")
+        print()
+        print("Item adicionado com sucesso!")
+        os.system("clear")
+        # Def de visualizar a despensa atual
+        input("<ENTER> para voltar")
+
+  elif menu == "2":
     os.system("Clear")
     opList = ""
     while opList != "0":
@@ -49,7 +71,7 @@ while menu != "0":
       print("+----------------------------+")
       opList = input("| Escolha sua opção:")
 
-  if menu == "3":
+  elif menu == "3":
     os.system('clear')
     opList = ""
     print("+----------------------------+")
@@ -58,7 +80,7 @@ while menu != "0":
     # Variável que recebe os itens que atingiram o estoque minimo
     opList = input("| <ENTER> para voltar")
 
-  if menu == "4":
+  elif menu == "4":
     os.system('clear')
     opList = ""
     print("+-------------------------------------------+")
