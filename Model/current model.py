@@ -1,242 +1,191 @@
 import os
 
 #####################################
-##### Projeto Escola - Versão 4 #####
+##### Projeto Escola - Versão 6 #####
 #####################################
+
+alunos = {
+    '123' : ["Allysson Dantas", "allyson@ufrn.br", "99999-9999"],
+    '456' : ["Geocasta Souza", "geo@ufrn.br", "88888-8888"],
+    '789' : ["Vitória Pereira", "vivi@ufrn.br", "77777-7777"]
+}
+
+professores = {}
+
+turmas = {}
+
+################################################################
+################################################################
+##########               F U N Ç Õ E S                ##########
+################################################################
+################################################################
+
+def menu_principal():
+  os.system('clear')
+  print("############################################")
+  print("######       Projeto SIG-Escola       ######")
+  print("############################################")
+  print("#####      1 - Módulo Aluno            #####")
+  print("#####      2 - Módulo Professor        #####")
+  print("#####      3 - Módulo Turma            #####")
+  print("#####      4 - Módulo Relatório        #####")
+  print("#####      5 - Módulo Informações      #####")
+  print("#####      0 - Sair                    #####")
+  op_princ = input("##### Escolha sua opção: ")
+  return op_princ
+
+
+def cadastrar_aluno():
+  os.system('clear')
+  print()
+  print("############################################")
+  print("#####           Cadastra Aluno         #####")
+  print("############################################")
+  print()
+  nome = input("##### Nome: ")
+  print()
+  matr = input("##### Matrícula: ")
+  print()
+  email = input("##### Email: ")
+  print()
+  fone = input("##### Celular: ")
+  print()
+  alunos[matr] = [nome, email, fone]
+  print(alunos)
+  print("Aluno cadastrado com sucesso!")
+  input("Tecle <ENTER> para continuar...")
+
+
+def exibir_aluno():
+  os.system('clear')
+  print()
+  print("############################################")
+  print("#####        Exibe Dados do Aluno      #####")
+  print("############################################")
+  print()
+  matr = input("Qual a matrícula do aluno: ")
+  if matr in alunos:
+      print("##### Nome: ", alunos[matr][0])
+      print("##### Matrícula: ", matr)
+      print("##### Email: ", alunos[matr][1])
+      print("##### Celular: ", alunos[matr][2])
+  else:
+      print("Aluno(a) inexistente!")
+  print()
+  input("Tecle <ENTER> para continuar...")
+
+
+def alterar_aluno():
+  os.system('clear')
+  print()
+  print("############################################")
+  print("#####       Altera Dados do Aluno      #####")
+  print("############################################")
+  print()
+  matr = input("Qual a matrícula do aluno: ")
+  if matr in alunos:
+      print("Informe os novos dados do aluno: ")
+      nome = input("##### Nome: ")
+      print()
+      email = input("##### Email: ")
+      print()
+      fone = input("##### Celular: ")
+      print()
+      alunos[matr] = [nome, email, fone]
+      print("Aluno alterado com sucesso!")
+  else:
+      print("Aluno(a) inexistente!")
+  input("Tecle <ENTER> para continuar...")
+
+
+def excluir_aluno():
+  os.system('clear')
+  print()
+  print("############################################")
+  print("#####         Exclui Aluno             #####")
+  print("############################################")
+  print()
+  matr = input("Qual a matrícula do(a) aluno(a): ")
+  if matr in alunos:
+      print("Nome:", alunos[matr][0])
+      print("E-mail:", alunos[matr][1])
+      print("Fone:", alunos[matr][2])
+      print()
+      resp = input("Tem certeza que deseja excluir o aluno [S/N]? ")
+      if resp == 'S' or resp == 's':
+        del alunos[matr]
+        print("Aluno(a) excluído(a) com sucesso!")
+      else:
+        print("Exclusão não realizada!")
+  else:
+      print("Aluno(a) inexistente!")
+  input("Tecle <ENTER> para continuar...")
+
+
+def menu_aluno():
+  os.system('clear')
+  print()
+  print("############################################")
+  print("#####           Módulo Aluno           #####")
+  print("############################################")
+  print("##### 1 - Cadastrar Aluno              #####")
+  print("##### 2 - Exibir Dados do Aluno        #####")
+  print("##### 3 - Alterar Dados do Aluno       #####")
+  print("##### 4 - Excluir Aluno                #####")
+  print("##### 0 - Retornar ao Menu Principal   #####")
+  op_aluno = input("##### Escolha sua opção: ")
+  return op_aluno
+
+################################################################
+################################################################
+##########    P R O G R A M A   P R I N C I P A L     ##########
+################################################################
+################################################################
 
 op_princ = ''
 while op_princ != '0':
-    os.system('clear')
-    print("############################################")
-    print("######       Projeto SIG-Escola       ######")
-    print("############################################")
-    print("#####      1 - Módulo Aluno            #####")
-    print("#####      2 - Módulo Professor        #####")
-    print("#####      3 - Módulo Turma            #####")
-    print("#####      4 - Módulo Relatório        #####")
-    print("#####      5 - Módulo Informações      #####")
-    print("#####      0 - Sair                    #####")
-    op_princ = input("##### Escolha sua opção: ")
+    op_princ = menu_principal()
 
     if op_princ == '1':
         op_aluno = ''
         while op_aluno != '0':
-            os.system('clear')
-            print()
-            print("############################################")
-            print("#####           Módulo Aluno           #####")
-            print("############################################")
-            print("##### 1 - Cadastrar Aluno              #####")
-            print("##### 2 - Exibir Dados do Aluno        #####")
-            print("##### 3 - Alterar Dados do Aluno       #####")
-            print("##### 4 - Excluir Aluno                #####")
-            print("##### 0 - Retornar ao Menu Principal   #####")
-            op_aluno = input("##### Escolha sua opção: ")
+            op_aluno = menu_aluno()
             print()
             if op_aluno == '1':
-                os.system('clear')
-                print()
-                print("############################################")
-                print("#####           Cadastra Aluno         #####")
-                print("############################################")
-                print()
-                nome = input("##### Nome: ")
-                print()
-                matr = input("##### Matrícula: ")
-                print()
-                email = input("##### Email: ")
-                print()
-                fone = input("##### Celular: ")
-                print()
-                print("Aluno cadastrado com sucesso!")
-                input("Tecle <ENTER> para continuar...")
+                cadastrar_aluno()
             elif op_aluno == '2':
-                os.system('clear')
-                print()
-                print("############################################")
-                print("#####        Exibe Dados do Aluno      #####")
-                print("############################################")
-                print()
-                print("##### Nome: ", nome)
-                print("##### Matrícula: ", matr)
-                print("##### Email: ", email)
-                print("##### Celular: ", fone)
-                print()
-                input("Tecle <ENTER> para continuar...")
+                exibir_aluno()
             elif op_aluno == '3':
-                os.system('clear')
-                print()
-                print("############################################")
-                print("#####       Altera Dados do Aluno      #####")
-                print("############################################")
-                print()
-                nome = input("##### Nome: ")
-                print()
-                matr = input("##### Matrícula: ")
-                print()
-                email = input("##### Email: ")
-                print()
-                fone = input("##### Celular: ")
-                print()
-                print("Aluno alterado com sucesso!")
-                input("Tecle <ENTER> para continuar...")
+                alterar_aluno()
             elif op_aluno == '4':
-                os.system('clear')
-                print()
-                print("############################################")
-                print("#####         Exclui Aluno             #####")
-                print("############################################")
-                print()
-                matr = input("##### Matrícula: ")
-                print()
-                print("Aluno excluído com sucesso!")
-                input("Tecle <ENTER> para continuar...")
+                excluir_aluno()
+              
     elif op_princ == '2':
-        op_prof = ''
-        while op_prof != '0':
-            os.system('clear')
-            print()
-            print("############################################")
-            print("#####         Módulo Professor         #####")
-            print("############################################")
-            print("##### 1 - Cadastrar Professor          #####")
-            print("##### 2 - Exibir Dados do Professor    #####")
-            print("##### 3 - Alterar Dados do Professor   #####")
-            print("##### 4 - Excluir Professor            #####")
-            print("##### 0 - Retornar ao Menu Principal   #####")
-            op_prof = input("##### Escolha sua opção: ")
-            print()
-            if op_prof == '1':
-                os.system('clear')
-                print()
-                print("############################################")
-                print("#####         Cadastra Professor       #####")
-                print("############################################")
-                print()
-                nome = input("##### Nome: ")
-                print()
-                cpf = input("##### CPF: ")
-                print()
-                email = input("##### Email: ")
-                print()
-                fone = input("##### Celular: ")
-                print()
-                print("Professor cadastrado com sucesso!")
-                input("Tecle <ENTER> para continuar...")
-            elif op_prof == '2':
-                os.system('clear')
-                print()
-                print("############################################")
-                print("#####      Exibe Dados do Professor    #####")
-                print("############################################")
-                print()
-                print("##### Nome: ", nome)
-                print("##### CPF: ", cpf)
-                print("##### Email: ", email)
-                print("##### Celular: ", fone)
-                print()
-                input("Tecle <ENTER> para continuar...")
-            elif op_prof == '3':
-                os.system('clear')
-                print()
-                print("############################################")
-                print("#####     Altera Dados do Professor    #####")
-                print("############################################")
-                print()
-                nome = input("##### Nome: ")
-                print()
-                cpf = input("##### CPF: ")
-                print()
-                email = input("##### Email: ")
-                print()
-                fone = input("##### Celular: ")
-                print()
-                print("Professor alterado com sucesso!")
-                input("Tecle <ENTER> para continuar...")
-            elif op_prof == '4':
-                os.system('clear')
-                print()
-                print("############################################")
-                print("#####       Exclui Professor           #####")
-                print("############################################")
-                print()
-                cpf = input("##### CPF: ")
-                print()
-                print("Professor excluído com sucesso!")
-                input("Tecle <ENTER> para continuar...")
+        print()
+        print("############################################")
+        print("#####         Módulo Professor         #####")
+        print("############################################")
+        print("##### 1 - Cadastrar Professor          #####")
+        print("##### 2 - Exibir Dados do Professor    #####")
+        print("##### 3 - Alterar Dados do Professor   #####")
+        print("##### 4 - Excluir Professor            #####")
+        print("##### 0 - Retornar ao Menu Principal   #####")
+        op_aluno = input("##### Escolha sua opção: ")
+        print()
+        input("Tecle <ENTER> para continuar...")
     elif op_princ == '3':
-        op_turma = ''
-        while op_turma != '0':
-            os.system('clear')
-            print()
-            print("############################################")
-            print("#####           Módulo Turma           #####")
-            print("############################################")
-            print("##### 1 - Cadastrar Turma              #####")
-            print("##### 2 - Exibir Dados da Turma        #####")
-            print("##### 3 - Alterar Dados da Turma       #####")
-            print("##### 4 - Excluir Turma                #####")
-            print("##### 0 - Retornar ao Menu Principal   #####")
-            op_turma = input("##### Escolha sua opção: ")
-            print()
-            if op_turma == '1':
-                os.system('clear')
-                print()
-                print("############################################")
-                print("#####           Cadastra Turma         #####")
-                print("############################################")
-                print()
-                nome_turma = input("##### Nome da Turma: ")
-                print()
-                cod_turma = input("##### Código da Turma: ")
-                print()
-                horario = input("##### Horário das Aulas: ")
-                print()
-                cpf_prof = input("##### CPF do Professor: ")
-                print()
-                print("Professor cadastrado com sucesso!")
-                input("Tecle <ENTER> para continuar...")
-            elif op_turma == '2':
-                os.system('clear')
-                print()
-                print("############################################")
-                print("#####        Exibe Dados da Turma      #####")
-                print("############################################")
-                print()
-                print("##### Código da Turma: ", cod_turma)
-                print("##### Nome da Turma: ", nome_turma)
-                print("##### Horário: ", horario)
-                print("##### Professor: ", cpf_prof)
-                print()
-                input("Tecle <ENTER> para continuar...")
-            elif op_turma == '3':
-                os.system('clear')
-                print()
-                print("############################################")
-                print("#####       Altera Dados da Turma      #####")
-                print("############################################")
-                print()
-                nome_turma = input("##### Nome da Turma: ")
-                print()
-                cod_turma = input("##### Código da Turma: ")
-                print()
-                horario = input("##### Horário das Aulas: ")
-                print()
-                cpf_prof = input("##### CPF do Professor: ")
-                print()
-                print("Turma alterada com sucesso!")
-                input("Tecle <ENTER> para continuar...")
-            elif op_turma == '4':
-                os.system('clear')
-                print()
-                print("############################################")
-                print("#####         Exclui Turma             #####")
-                print("############################################")
-                print()
-                cod_turma = input("##### Código da Turma: ")
-                print()
-                print("Turma excluída com sucesso!")
-                input("Tecle <ENTER> para continuar...")
+        print()
+        print("############################################")
+        print("#####           Módulo Turma           #####")
+        print("############################################")
+        print("##### 1 - Cadastrar Turma              #####")
+        print("##### 2 - Exibir Dados da Turma        #####")
+        print("##### 3 - Alterar Dados da Turma       #####")
+        print("##### 4 - Excluir Turma                #####")
+        print("##### 0 - Retornar ao Menu Principal   #####")
+        op_aluno = input("##### Escolha sua opção: ")
+        print()
+        input("Tecle <ENTER> para continuar...")
     elif op_princ == '4':
         print()
         print("############################################")
