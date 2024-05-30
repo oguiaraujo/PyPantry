@@ -9,12 +9,7 @@ retiradas = {}
 estoque = {}
 
 #-FUNÇÕES-----------------------------------------------------------------------
-
-
-#FINALIZAR ESSSA ÁREA###########################################################
-
-op_menu = ""
-while op_menu != "0":
+def menu_despensa():
   os.system("clear")
   print()
   print("+----------------------+")
@@ -30,124 +25,124 @@ while op_menu != "0":
   print("| 7 - Informações      |")
   print("| 0 - Sair             |")
   print("+----------------------+")
-  # AQUI terão Sinais de notificação existentes com base nos relatórios
   op_menu = input("| Escolha sua opção:")
+  return op_menu
+
+
+def menu_itens():
+    os.system('clear')
+    print()
+    print("+----------------------+")
+    print("|      MENU ITENS      |")
+    print("+----------------------+")
+    print("| 1 - Cadastrar        |")
+    print("| 2 - Exibir Dados     |")
+    print("| 3 - Remover Dados    |")
+    print("| 0 - Voltar           |")
+    print("+----------------------+")
+    op_itens = input("| Escolha sua opção:")
+    return op_itens
+
+def cadastrar_itens():
+  while True:
+    os.system("clear")
+    print("+-----------------------+")
+    print("|    CADASTRAR ITENS    |")
+    print("+-----------------------+")
+    print("|")
+    print("| <ENTER> para voltar")
+    print("|")
+    cod = input("| Código de 4 dígitos (XXXX):")
+    print("|")
+    if cod.strip() == '':
+      break
+    elif len(cod) == 4 and cod.isdigit():
+      if cod not in itens:
+        nome = input("| Nome:") #não permitir que o usuário coloque apenas espaço
+        print("|")
+        categoria = input("| Categoria:")
+        print("|")
+        marca = input("| Marca:")
+        print("|")
+        itens[cod] = [nome, categoria, marca]
+        print("| Item cadastrado com sucesso!")
+        print()
+        input("<ENTER> para continuar")
+      else:
+        print("| Este código já foi cadastrado anteriormente!")
+        print()
+        input("<ENTER> para continuar")
+#FINALIZAR ESSSA ÁREA###########################################################
+
+op_menu = ""
+while op_menu != "0":
+  op_menu = menu_despensa()
 
   if op_menu == "1":
-    os.system("Clear")
     op_itens = ""
     while op_itens != "0":
-      os.system('clear')
-      print()
-      print("+----------------------+")
-      print("|         ITENS        |")
-      print("+----------------------+")
-      print("| 1 - Cadastrar        |")
-      print("| 2 - Exibir Dados     |")
-      print("| 3 - Remover Dados    |")
-      print("| 0 - Voltar           |")
-      print("+----------------------+")
-      op_itens = input("| Escolha sua opção:")
+      op_itens = menu_itens()
+      if op_itens == "1":
+        cadastrar_itens()
 
-      if op_itens == "1": #Aplicar esse modelo nos outros
-        os.system("clear")
+
+      elif op_itens == "2":
         while True:
           os.system("clear")
           print("+----------------------+")
-          print("|  CADASTRAR PRODUTOS  |")
+          print("|     EXIBIR DADOS     |")
           print("+----------------------+")
           print("|")
-          print("| Digite 'SAIR' para VOLTAR")
+          print("| <ENTER> para voltar")
           print("|")
           cod = input("| Código de 4 dígitos (XXXX):")
           print("|")
-          if cod.upper() == 'SAIR':
+          if cod.strip() == '':
             break
           elif len(cod) == 4 and cod.isdigit():
-            if cod not in itens:
-              nome = input("| Nome:") #não permitir que o usuário coloque apenas espaço
-              print("|")
-              categoria = input("| Categoria:")
-              print("|")
-              marca = input("| Marca:")
-              print("|")
-              itens[cod] = [nome, categoria, marca]
-              print("| Item cadastrado com sucesso!")
-              print()
-              input("<ENTER> para continuar")
-            else:
-              print("| Este código já foi cadastrado anteriormente!")
-              print()
-              input("<ENTER> para continuar")
-          else:
-            print("| O Código deve conter necessáriamente 4 NÚMEROS!")
-            print("|")
-        print()
-        input("<ENTER> para voltar")
-      
-      elif op_itens == "2":
-        os.system("clear")
-        print("+----------------------+")
-        print("|     EXIBIR DADOS     |")
-        print("+----------------------+")
-        print("|")
-        while True:
-          cod = input("| Código de 4 dígitos (XXXX):")
-          print("|")
-          if len(cod) == 4 and cod.isdigit():
             if cod in itens:
-              break
+              print("| Codigo:", cod)
+              print("| Nome:", itens[cod][0])
+              print("| Categoria:", itens[cod][1])
+              print("| Marca:", itens[cod][2])
+              print()
+              input("<ENTER> para continuar")
             else:
-              break
-          else:
-            print("| O Código deve conter necessáriamente 4 NÚMEROS!")
-            print("|")
-        if cod in itens:
-          print("| Codigo:", cod)
-          print("| Nome:", itens[cod][0])
-          print("| Categoria:", itens[cod][1])
-          print("| Marca:", itens[cod][2])
-          print("|")
-        else:
-          print("| Código inexistente!")
-        print()
-        input("<ENTER> para voltar")
+              print("| Código inexistente!")
+              print()
+              input("<ENTER> para continuar")
       
       elif op_itens == "3":
-        os.system("clear")
-        print("+-----------------------+")
-        print("|     REMOVER DADOS     |")
-        print("+-----------------------+")
-        print("|")
         while True:
+          os.system("clear")
+          print("+-----------------------+")
+          print("|     REMOVER DADOS     |")
+          print("+-----------------------+")
+          print("|")
+          print("| <ENTER> para voltar")
+          print("|")
           cod = input("| Código de 4 dígitos (XXXX):")
           print("|")
+          if cod.strip() == '':
+            break
           if len(cod) == 4 and cod.isdigit():
-            if cod not in itens:
-              break
-            else:
-              print("| Este código já foi cadastrado anteriormente!")
+            if cod in itens:
+              print("| Codigo:", cod)
+              print("| Nome:", itens[cod][0])
+              print("| Categoria:", itens[cod][1])
+              print("| Marca:", itens[cod][2])
               print("|")
-          else:
-            print("| O Código deve conter necessáriamente 4 NÚMEROS!")
-            print("|")
-        if cod in itens:
-          print("| Codigo:", cod)
-          print("| Nome:", itens[cod][0])
-          print("| Categoria:", itens[cod][1])
-          print("| Marca:", itens[cod][2])
-          print("|")
-          resp = input("| Deseja REMOVER os dados do item acima (S/N)?")
-          print("|")
-          if resp.upper() == "S":
-            del itens[cod] # MUDAR para tornar o item "False" em vez de deletar
-            print("| Item Removido com Sucesso!")
-          else:
-            print("| O item não foi removido!")
-        else:
-          print("| Item Inexistente na Despensa!")
-        print()
-        input("<ENTER> para voltar")
+              resp = input("| Deseja REMOVER os dados do item acima (S/N)?")
+              print("|")
+              if resp.upper() == "S":
+                del itens[cod] # MUDAR para tornar o item "False" em vez de deletar
+                print("| Item Removido com Sucesso!")
+                print()
+                input("<ENTER> para voltar")
+            else:
+              print("| Código inexistente!")
+              print()
+              input("<ENTER> para voltar")
 
   elif op_menu == "2":
     os.system("clear")
