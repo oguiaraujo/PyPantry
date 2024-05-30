@@ -2,11 +2,14 @@ import os
 
 #-Dicionários-------------------------------------------------------------------
 itens = {
-  "001" : ["Feijão", "Alimento", "Carioca"]
+  "0001" : ["Feijão", "Alimento", "Carioca"]
 }
 compras = {}
 retiradas = {}
 estoque = {}
+
+#-FUNÇÕES-----------------------------------------------------------------------
+
 
 #FINALIZAR ESSSA ÁREA###########################################################
 
@@ -46,22 +49,39 @@ while op_menu != "0":
       print("+----------------------+")
       op_itens = input("| Escolha sua opção:")
 
-      if op_itens == "1":
+      if op_itens == "1": #Aplicar esse modelo nos outros
         os.system("clear")
-        print("+----------------------+")
-        print("|  CADASTRAR PRODUTOS  |")
-        print("+----------------------+")
-        print("|")
-        cod = input("| Código:")
-        print("|")
-        nome = input("| Nome:")
-        print("|")
-        categoria = input("| Categoria:")
-        print("|")
-        marca = input("| Marca:")
-        print("|")
-        itens[cod] = [nome, categoria, marca]
-        print("| Produto cadastrado com sucesso!")
+        while True:
+          os.system("clear")
+          print("+----------------------+")
+          print("|  CADASTRAR PRODUTOS  |")
+          print("+----------------------+")
+          print("|")
+          print("| Digite 'SAIR' para VOLTAR")
+          print("|")
+          cod = input("| Código de 4 dígitos (XXXX):")
+          print("|")
+          if cod.upper() == 'SAIR':
+            break
+          elif len(cod) == 4 and cod.isdigit():
+            if cod not in itens:
+              nome = input("| Nome:") #não permitir que o usuário coloque apenas espaço
+              print("|")
+              categoria = input("| Categoria:")
+              print("|")
+              marca = input("| Marca:")
+              print("|")
+              itens[cod] = [nome, categoria, marca]
+              print("| Item cadastrado com sucesso!")
+              print()
+              input("<ENTER> para continuar")
+            else:
+              print("| Este código já foi cadastrado anteriormente!")
+              print()
+              input("<ENTER> para continuar")
+          else:
+            print("| O Código deve conter necessáriamente 4 NÚMEROS!")
+            print("|")
         print()
         input("<ENTER> para voltar")
       
@@ -71,15 +91,25 @@ while op_menu != "0":
         print("|     EXIBIR DADOS     |")
         print("+----------------------+")
         print("|")
-        cod = input("| Insira o Código do Item:")
-        print("|")
+        while True:
+          cod = input("| Código de 4 dígitos (XXXX):")
+          print("|")
+          if len(cod) == 4 and cod.isdigit():
+            if cod in itens:
+              break
+            else:
+              break
+          else:
+            print("| O Código deve conter necessáriamente 4 NÚMEROS!")
+            print("|")
         if cod in itens:
           print("| Codigo:", cod)
           print("| Nome:", itens[cod][0])
           print("| Categoria:", itens[cod][1])
           print("| Marca:", itens[cod][2])
+          print("|")
         else:
-          print("| Item Inexistente na Despensa!")
+          print("| Código inexistente!")
         print()
         input("<ENTER> para voltar")
       
@@ -89,9 +119,19 @@ while op_menu != "0":
         print("|     REMOVER DADOS     |")
         print("+-----------------------+")
         print("|")
-        cod = input("| Insira o Código do Item:")
-        if cod in itens:
+        while True:
+          cod = input("| Código de 4 dígitos (XXXX):")
           print("|")
+          if len(cod) == 4 and cod.isdigit():
+            if cod not in itens:
+              break
+            else:
+              print("| Este código já foi cadastrado anteriormente!")
+              print("|")
+          else:
+            print("| O Código deve conter necessáriamente 4 NÚMEROS!")
+            print("|")
+        if cod in itens:
           print("| Codigo:", cod)
           print("| Nome:", itens[cod][0])
           print("| Categoria:", itens[cod][1])
