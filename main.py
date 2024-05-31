@@ -1,4 +1,5 @@
 import os
+import re
 
 #-Dicionários-------------------------------------------------------------------
 itens = {
@@ -9,6 +10,14 @@ retiradas = {}
 estoque = {}
 
 #-FUNÇÕES-----------------------------------------------------------------------
+def validar_data_hora(data_hora):
+  regex = r'^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\d{4} (0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$'
+  if re.match(regex, data_hora):
+      return True
+  else:
+      return False
+
+
 def menu_despensa():
   os.system("clear")
   print()
@@ -72,8 +81,68 @@ def cadastrar_itens():
         print("| Este código já foi cadastrado anteriormente!")
         print()
         input("<ENTER> para continuar")
-#FINALIZAR ESSSA ÁREA###########################################################
 
+
+def exibir_dados():
+  while True:
+    os.system("clear")
+    print("+----------------------+")
+    print("|     EXIBIR DADOS     |")
+    print("+----------------------+")
+    print("|")
+    print("| <ENTER> para voltar")
+    print("|")
+    cod = input("| Código de 4 dígitos (XXXX):")
+    print("|")
+    if cod.strip() == '':
+      break
+    elif len(cod) == 4 and cod.isdigit():
+      if cod in itens:
+        print("| Codigo:", cod)
+        print("| Nome:", itens[cod][0])
+        print("| Categoria:", itens[cod][1])
+        print("| Marca:", itens[cod][2])
+        print()
+        input("<ENTER> para continuar")
+      else:
+        print("| Código inexistente!")
+        print()
+        input("<ENTER> para continuar")
+
+
+def remover_dados():
+  while True:
+    os.system("clear")
+    print("+-----------------------+")
+    print("|     REMOVER DADOS     |")
+    print("+-----------------------+")
+    print("|")
+    print("| <ENTER> para voltar")
+    print("|")
+    cod = input("| Código de 4 dígitos (XXXX):")
+    print("|")
+    if cod.strip() == '':
+      break
+    if len(cod) == 4 and cod.isdigit():
+      if cod in itens:
+        print("| Codigo:", cod)
+        print("| Nome:", itens[cod][0])
+        print("| Categoria:", itens[cod][1])
+        print("| Marca:", itens[cod][2])
+        print("|")
+        resp = input("| Deseja REMOVER os dados do item acima (S/N)?")
+        print("|")
+        if resp.upper() == "S":
+          del itens[cod] # MUDAR para tornar o item "False" em vez de deletar
+          print("| Item Removido com Sucesso!")
+          print()
+          input("<ENTER> para contuniar")
+      else:
+        print("| Código inexistente!")
+        print()
+        input("<ENTER> para continuar")
+
+#-PROGRAMA PRINCIPAL------------------------------------------------------------
 op_menu = ""
 while op_menu != "0":
   op_menu = menu_despensa()
@@ -84,111 +153,114 @@ while op_menu != "0":
       op_itens = menu_itens()
       if op_itens == "1":
         cadastrar_itens()
-
-
       elif op_itens == "2":
-        while True:
-          os.system("clear")
-          print("+----------------------+")
-          print("|     EXIBIR DADOS     |")
-          print("+----------------------+")
-          print("|")
-          print("| <ENTER> para voltar")
-          print("|")
-          cod = input("| Código de 4 dígitos (XXXX):")
-          print("|")
-          if cod.strip() == '':
-            break
-          elif len(cod) == 4 and cod.isdigit():
-            if cod in itens:
-              print("| Codigo:", cod)
-              print("| Nome:", itens[cod][0])
-              print("| Categoria:", itens[cod][1])
-              print("| Marca:", itens[cod][2])
-              print()
-              input("<ENTER> para continuar")
-            else:
-              print("| Código inexistente!")
-              print()
-              input("<ENTER> para continuar")
-      
+        exibir_dados()      
       elif op_itens == "3":
-        while True:
-          os.system("clear")
-          print("+-----------------------+")
-          print("|     REMOVER DADOS     |")
-          print("+-----------------------+")
-          print("|")
-          print("| <ENTER> para voltar")
-          print("|")
-          cod = input("| Código de 4 dígitos (XXXX):")
-          print("|")
-          if cod.strip() == '':
-            break
-          if len(cod) == 4 and cod.isdigit():
-            if cod in itens:
-              print("| Codigo:", cod)
-              print("| Nome:", itens[cod][0])
-              print("| Categoria:", itens[cod][1])
-              print("| Marca:", itens[cod][2])
-              print("|")
-              resp = input("| Deseja REMOVER os dados do item acima (S/N)?")
-              print("|")
-              if resp.upper() == "S":
-                del itens[cod] # MUDAR para tornar o item "False" em vez de deletar
-                print("| Item Removido com Sucesso!")
-                print()
-                input("<ENTER> para voltar")
-            else:
-              print("| Código inexistente!")
-              print()
-              input("<ENTER> para voltar")
-
+        remover_dados()
+        
   elif op_menu == "2":
-    os.system("clear")
-    print("+----------------------+")
-    print("|        COMPRA        |")
-    print("+----------------------+")
-    print("|")
-    cod = input("| Insira o Código do produto:")
-    print("|")
-    if cod in itens:
-      dt_hr = input("| Data e Hora da Compra:")
+    while True:
+      os.system("clear")
+      print("+----------------------+")
+      print("|        COMPRA        |")
+      print("+----------------------+")
       print("|")
-      valor = float(input("| Valor da unidade:"))
+      print("| <ENTER> para voltar")
       print("|")
-      quantidade = int(input("| Quantidade comprada:"))
-      compras[dt_hr] = [cod, valor, quantidade]
-      estoque[cod] = [quantidade] # Pro estoque vou adicionar um verificador de quantidade, para que ele adicione em vez de alterar
-      print(compras)
-      print("| Compra cadastrada com sucesso!")
-    else:
-      print("| O código não corresponde a nenhum item da despensa!")
-      #resp = input ("Deseja cadastrar um item na despensa (S/N)?")
-    print()
-    input("<ENTER> para voltar")
+      cod = input("| Código existente de 4 dígitos (XXXX):")
+      print("|")
+      if cod.strip() == '':
+        break
+      if len(cod) == 4 and cod.isdigit():
+        if cod in itens:
+          data_hora = input("| Data e Hora da COMPRA (DD/MM/AAAA HH:MM):")
+          if validar_data_hora(data_hora):
+            while True:
+              try:
+                valor = float(input("| Valor da unidade:"))
+                break
+              except ValueError:
+                print()
+                print("| Insira uma quantidade válida")
+                print()
+            while True:
+              try:
+                quantidade = int(input("| Quantidade a ser adicionada:"))
+                break
+              except ValueError:
+                print()
+                print("| Insira uma quantidade válida")
+                print()
+            compras[data_hora] = [cod, valor, quantidade]
+            if cod in estoque:
+              estoque[cod] += quantidade
+            else:
+              estoque[cod] = quantidade
+            if data_hora in compras:
+              print("|")
+              print("| Código:", compras[data_hora][0])
+              print("| Valor da unidade:", compras[data_hora][1])
+              print("| Quantidade comprada:", compras[data_hora][2])
+              print("|")
+              print("| Compra cadastrada com sucesso!")
+              print()
+              input("<ENTER> para continuar")
+          else:
+            print("Insira uma data e hora válida")
+            print()
+            input("<ENTER> para continuar")
+        else:
+          print("| O código inexistente!")
+          print()
+          input("<ENTER> para continuar")
+
 
   elif op_menu == "3":
-    os.system("clear")
-    print("+----------------------+")
-    print("|       RETIRADA       |")
-    print("+----------------------+")
-    print("|")
-    cod = input("| Insira o Código do produto:")
-    print("|")
-    if cod in itens:
-      dt_hr = input("| Data e Hora da Retirada:")
+    while True:
+      os.system("clear")
+      print("+----------------------+")
+      print("|       RETIRADA       |")
+      print("+----------------------+")
       print("|")
-      quant_ret = int(input("| Quantidade Retirada:"))
-      quantidade = estoque[cod][0] - quant_ret #para a quantidade salva no dicionário ser a quantidade que restou
-      retiradas[dt_hr] = [cod, quantidade]
-      estoque[cod] = quantidade
-      print(retiradas)
-      print("| Retirada cadastrada com sucesso!")
-    else:
-      print("| O código não corresponde a nenhum item da despensa!")
-    print()
-    input("<ENTER> para voltar")
+      print("| <ENTER> para voltar")
+      print("|")
+      cod = input("| Código existente de 4 dígitos (XXXX):")
+      print("|")
+      if cod.strip() == '':
+        break
+      if len(cod) == 4 and cod.isdigit():
+        if cod in itens:
+          data_hora = input("| Data e Hora da RETIRADA (DD/MM/AAAA HH:MM):")
+          if validar_data_hora(data_hora):
+            while True:
+              try:
+                quantidade = int(input("| Quantidade a ser retirada:"))
+                break
+              except ValueError:
+                print()
+                print("| Insira uma quantidade válida")
+                print()
+            retiradas[data_hora] = [cod, quantidade]
+            if cod in estoque:
+                  if estoque[cod] >= quantidade:
+                    estoque[cod] -= quantidade
+                    if estoque[cod] == 0:
+                      del estoque[cod]
+                  else:
+                    print("| Quantidade insuficiente no estoque")
+                    print()
+            if data_hora in retiradas:
+              print("|")
+              print("| Código:", retiradas[data_hora][0])
+              print("| Quantidade retirada:", retiradas[data_hora][1])
+              print("|")
+            print("| Retirada cadastrada com sucesso!")
+            print()
+            input("<ENTER> para continuar")
+          else:
+            print("| Código inexistente!")
+            print()
+            input("<ENTER> para continuar")
 
 
   elif op_menu == "4":
@@ -203,7 +275,6 @@ while op_menu != "0":
     print()
     input("| <ENTER> para voltar")
 
-################################################################################
 
   elif op_menu == "5":
     os.system('clear')
@@ -233,7 +304,7 @@ while op_menu != "0":
       print("| 4 - Itens Baratos             |")
       print("| 5 - Itens Caros               |")
       print("| 5 - Itens por Categoria       |")
-      print("| 5 - Itens Marca               |")
+      print("| 5 - Itens por Marca           |")
       print("| 0 - Voltar                    |")
       print("+-------------------------------+")
       input("| Escolha sua opção:")
