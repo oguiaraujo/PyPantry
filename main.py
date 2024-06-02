@@ -2,9 +2,7 @@ import os
 import re
 
 #-Dicionários-------------------------------------------------------------------
-itens = {
-  "0001" : ["Feijão", "Alimento", "Carioca"]
-}
+itens = {}
 compras = {}
 retiradas = {}
 estoque = {}
@@ -176,13 +174,12 @@ while op_menu != "0":
           data_hora = input("| Data e Hora da COMPRA (DD/MM/AAAA HH:MM):")
           if validar_data_hora(data_hora):
             while True:
-              try:
-                valor = float(input("| Valor da unidade:"))
-                break
-              except ValueError:
-                print()
-                print("| Insira uma quantidade válida")
-                print()
+                insira_valor = re.compile("^R\$ \d+(\.\d{1,2})?$")
+                valor = input("| Valor da unidade (R$ XX.XX):")
+                if insira_valor.match(valor):
+                  break
+                else:
+                  ValueError
             while True:
               try:
                 quantidade = int(input("| Quantidade a ser adicionada:"))
@@ -271,7 +268,8 @@ while op_menu != "0":
     print("|      ESTOQUE      |")
     print("+-------------------+")
     print("|")
-    print(estoque)
+    for cod, quantidade in estoque.items():
+      print("| ", cod, "|", quantidade)
     print()
     input("| <ENTER> para voltar")
 
@@ -284,13 +282,14 @@ while op_menu != "0":
     print("|      LISTA DE COMPRAS      |")
     print("+----------------------------+")
     print("|")
-    # Variável que recebe os itens que atingiram o estoque minimo
+    for cod, quantidade in estoque.items():
+      if quantidade <= 5:
+        print("| ",cod,"|", itens[cod][0])
     print()
     input("| <ENTER> para voltar")
 
 
   elif op_menu == "6":
-    os.system("Clear")
     op_rel = ""
     while op_rel != "0":
       os.system('clear')
@@ -301,24 +300,111 @@ while op_menu != "0":
       print("| 1 - Itens Faltando            |")
       print("| 2 - Itens em Baixa Quantidade |")
       print("| 3 - Itens em Alta Quantidade  |")
-      print("| 4 - Itens Baratos             |")
-      print("| 5 - Itens Caros               |")
+      print("| 4 - Itens por Valor           |")
       print("| 5 - Itens por Categoria       |")
-      print("| 5 - Itens por Marca           |")
+      print("| 6 - Itens por Marca           |")
       print("| 0 - Voltar                    |")
       print("+-------------------------------+")
-      input("| Escolha sua opção:")
+      op_rel = input("| Escolha sua opção:")
+
+      if op_rel == "1":
+        os.system("clear")
+        print("+--------------------------------+")
+        print("|         ITENS FALTANDO         |")
+        print("+--------------------------------+")
+        print("|")
+        for cod, quantidade in estoque.items():
+          if quantidade == 0:
+            print("| ",cod,"|", itens[cod][0])
+        print()
+        input("| <ENTER> para voltar")
+      
+      elif op_rel == "2":
+        os.system("clear")
+        print("+--------------------------------+")
+        print("|        BAIXA QUANTIDADE        |")
+        print("+--------------------------------+")
+        print("|")
+        for cod, quantidade in estoque.items():
+          if quantidade <= 5:
+            print("| ",cod,"|", itens[cod][0])
+        print()
+        input("| <ENTER> para voltar")
+
+      elif op_rel == "3":
+        os.system("clear")
+        print("+---------------------------------+")
+        print("|         ALTA QUANTIDADE         |")
+        print("+---------------------------------+")
+        print("|")
+        for cod, quantidade in estoque.items():
+          if quantidade >= 50:
+            print("| ",cod,"|", itens[cod][0])
+        print()
+        input("| <ENTER> para voltar")
+
+      elif op_rel == "4":
+        os.system("clear")
+        print("+---------------------------------+")
+        print("|         ITENS POR VALOR         |")
+        print("+---------------------------------+")
+        print("|")
+        while True:
+          insira_valor = re.compile("^R\$ \d+(\.\d{1,2})?$")
+          valor_procurado = input("| Valor da unidade (R$ XX.XX):")
+          if insira_valor.match(valor_procurado):
+            break
+          else:
+            ValueError
+        for data_hora, valor in compras.items():
+          if valor_procurado in compras[data_hora]:
+            apenas_data = 10
+            print("| Na data",data_hora[:apenas_data], "o item:", compras[data_hora][0],"Custava", valor_procurado)
+        print()
+        input("| <ENTER> para voltar")
+
+      elif op_rel == "5":
+        os.system("clear")
+        print("+---------------------------------+")
+        print("|       ITENS POR CATEGORIA       |")
+        print("+---------------------------------+")
+        print("|")
+        categoria_procurada = input("| Categoria:")
+        print("|")
+        for cod, categoria in itens.items():
+          if categoria_procurada in itens[cod]:
+            print("| ", cod, "|", itens[cod][0])
+        print()
+        input("| <ENTER> para voltar")
+
+      elif op_rel == "6":
+        os.system("clear")
+        print("+---------------------------------+")
+        print("|         ITENS POR MARCA         |")
+        print("+---------------------------------+")
+        print("|")
+        marca_procurada = input("| Marca:")
+        print("|")
+        for cod, marca in itens.items():
+          if marca_procurada in itens[cod]:
+            print("| ", cod, "|", itens[cod][0])
+        print()
+        input("| <ENTER> para voltar")
+
 
   elif op_menu == "7":
     os.system('clear')
-    op_inf = ""
     print()
-    print("+---------------------------------------------+")
-    print("|                 INFORMAÇÕES                 |")
-    print("+---------------------------------------------+")
-    print("| Projeto de Controle de Despensa             |")
-    print("| Desenvolvedor: Guilherme Araújo / oguiaraujo|")
-    print("+---------------------------------------------+")
+    print("+---------------------------------------+")
+    print("|                 INFORMAÇÕES           |")
+    print("+---------------------------------------+")
+    print("| Projeto de Controle de Despensa       |")
+    print("| Desenvolvedor: Guilherme Araújo       |")
+    print("| GitHub: oguiaraujo                    |")
+    print("| replit: oguiaraujo                    |")
+    print("| instagram: somuliro                   |")
+    print("+---------------------------------------+")
+    print()
     input("| <ENTER> para voltar")
 
 print("Programa Encerrado!")
