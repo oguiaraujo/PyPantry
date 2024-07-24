@@ -26,15 +26,18 @@ def cadastra_retirada(retiradas, itens, estoque):
           print("|")
       dt_hr = func_gerais.gera_data_hora()
       retiradas[str(dt_hr)] = [cod, quantidade, True]
-      if estoque[cod] > quantidade:
-        estoque[cod] -= quantidade
-        if estoque[cod] == 0:
-          del estoque[cod]
-      else:
-        print("| Quantidade insuficiente no estoque!")
-        print("| Tente cadastrar uma compra antes.")
-        return False
-      func_gerais.cadastrado()
+      if cod in estoque: # Adaptado do chatGPT
+        if estoque[cod] >= quantidade:
+          estoque[cod] -= quantidade
+          if estoque[cod] == 0:
+            del estoque[cod]
+        else:
+          print("| Quantidade insuficiente no estoque!")
+          print("| Tente cadastrar uma compra antes.")
+          print()
+          input("<ENTER> para continuar")
+          return False
+        func_gerais.cadastrado()
   else:
     func_gerais.erro_cod()
 
@@ -91,14 +94,18 @@ def altera_retirada(retiradas, estoque):
           print("| Insira uma quantidade válida!")
           print("|")
       retiradas[dt_hr][1] = quantidade
-      if estoque[cod] > quantidade:
-        estoque[cod] -= quantidade
-        if estoque[cod] == 0:
-          del estoque[cod]
-      else:
-        print("| Quantidade insuficiente no estoque!")
-        print()
-      func_gerais.alterado()
+      if cod in estoque: # Adaptado do chatGPT
+        if estoque[cod] >= quantidade:
+          estoque[cod] -= quantidade
+          if estoque[cod] == 0:
+            del estoque[cod]
+        else:
+          print("| Quantidade insuficiente no estoque!")
+          print("| Tente cadastrar uma compra antes.")
+          print()
+          input("<ENTER> para continuar")
+          return False
+        func_gerais.cadastrado()
   func_gerais.erro_cod()  
 
 

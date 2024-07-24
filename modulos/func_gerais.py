@@ -12,7 +12,7 @@ def gera_cod(itens):
 def gera_data_hora():
    dt_hr = datetime.now()
    dt_hr = dt_hr.strftime('%d%m%Y%H%M%S')
-   print("\033[92m| Código da compra:", dt_hr,"\033[0m")
+   print("\033[92m| Código por data e hora:", dt_hr,"\033[0m")
    print("|")
    return dt_hr
 
